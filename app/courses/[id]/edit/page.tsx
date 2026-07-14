@@ -72,7 +72,7 @@ export default function EditCoursePage() {
 
                 <div className="bg-card-bg border border-border rounded-sm p-6 sm:p-8">
                     <CourseForm
-                        initialData={course}
+                        initialData={course ?? undefined}
                         courseId={id}
                     />
                 </div>
