@@ -1,0 +1,77 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../app/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// --- Course & Assignment Models ---
+model Course {
+  id               String            @id @default(uuid())
+  title            String            @unique
+  semester         Semester          @default(FIRST)
+  year             StudyYear?        @default(FRESHMAN)
+  credits          Int?
+  instructor       String?
+  createdAt        DateTime          @default(now())
+  assignments      Assignment[]
+  inspirationItems InspirationItem[]
+  practiceBriefs   PracticeBrief[]
+}
+
+enum Semester {
+  FIRST
+  SECOND
+}
+
+enum StudyYear {
+  FRESHMAN
+  SECOND_YEAR
+  THIRD_YEAR
+  FOURTH_YEAR
+  FIFTH_YEAR
+  SIXTH_YEAR
+  SEVENTH_YEAR
+}
+
+model Assignment {
+  id          String           @id @default(cuid())
+  title       String
+  description String?
+  dueDate     DateTime
+  status      AssignmentStatus @default(NOT_STARTED)
+  course      Course           @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  courseId    String
+  createdAt   DateTime         @default(now())
+}
+
+enum AssignmentStatus {
+  NOT_STARTED
+  IN_PROGRESS
+  DONE
+}
+
+model InspirationItem {
+  id        String   @id @default(cuid())
+  imageUrl  String
+  note      String?
+  courseId  String?
+  course    Course?  @relation(fields: [courseId], references: [id], onDelete: SetNull)
+  createdAt DateTime @default(now())
+}
+
+model PracticeBrief {
+  id               String   @id @default(cuid())
+  prompt           String
+  generatedContent String
+  courseId         String
+  course           Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  createdAt        DateTime @default(now())
+}
