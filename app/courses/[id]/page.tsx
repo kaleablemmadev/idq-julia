@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
-import { ArrowLeft, Edit, Trash2 } from "lucide-react";
+import { ArrowLeft, Edit } from "lucide-react";
 
 interface CoursePageProps {
     id?: string;
@@ -31,7 +31,7 @@ export default function CoursePage() {
                 setIsLoading(true);
                 setError(null);
 
-                const res = await fetch(`/api/courses/${courseId}`, { cache: "no-store" });
+                const res = await fetch(`../api/courses/${courseId}`, { cache: "no-store" });
 
                 if (!res.ok) {
                     throw new Error("Failed to load course");
@@ -59,7 +59,7 @@ export default function CoursePage() {
         <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
             <div className="mb-6">
                 <Link 
-                    href="/courses"
+                    href="../courses"
                     className="inline-flex items-center gap-2 text-sm text-secondary hover:text-primary transition-colors"
                 >
                     <ArrowLeft className="w-4 h-4" />
@@ -71,7 +71,7 @@ export default function CoursePage() {
                 <h1 className="text-2xl sm:text-3xl font-bold text-primary">{course.title}</h1>
                 <div className="flex items-center gap-2">
                     <Link 
-                        href={`/courses/${courseId}/edit`}
+                        href={`../courses/${courseId}/edit`}
                         className="inline-flex items-center gap-2 px-4 py-2 border border-border hover:border-accent text-primary font-medium rounded-sm transition-colors"
                     >
                         <Edit className="w-4 h-4" />
