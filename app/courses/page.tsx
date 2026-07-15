@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { apiUrl } from "@/constants/api_constants";
 import { Plus } from "lucide-react";
 
 type CourseSummary = {
@@ -8,7 +7,7 @@ type CourseSummary = {
 };
 
 export default async function CoursesPage() {
-  const res = await fetch(`${apiUrl}/api/courses`, { cache: 'no-store' });
+  const res = await fetch(`/api/courses`, { cache: 'no-store' });
 
   if (!res.ok) {
     return (
