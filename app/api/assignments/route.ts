@@ -1,6 +1,5 @@
 import prisma from "@/lib/prisma";
 import { NextResponse } from "next/server";
-import { useParams } from "next/navigation";
 
 /*
     ALL ASSIGNMENTS
